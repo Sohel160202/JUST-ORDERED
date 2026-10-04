@@ -5,8 +5,8 @@ import {getReferralPreview} from "@/data/platform";
 import {formatMoney} from "@/core/currency";
 
 export default function ReferralLanding(){
- const {code}=useParams<{code:string}>(),[preview,setPreview]=useState<any>(undefined),[reward,setReward]=useState<{inviter:number;invitee:number}|null>(null);
- useEffect(()=>{let alive=true;getReferralPreview(code).then(async p=>{if(!alive)return;setPreview(p);try{const {getReferralDashboard}=await import("@/data/platform");}catch{};}).catch(()=>{if(alive)setPreview(null)});return()=>{alive=false}},[code]);
+ const {code}=useParams<{code:string}>(),[preview,setPreview]=useState<any>(undefined);
+ useEffect(()=>{let alive=true;getReferralPreview(code).then(p=>{if(!alive)return;setPreview(p)}).catch(()=>{if(alive)setPreview(null)});return()=>{alive=false}},[code]);
  const continueToShop=()=>{localStorage.setItem("just-ordered:referral",code.toLowerCase());location.href="/";};
  return <main className="referralShell">
   <section className="referralCard">
