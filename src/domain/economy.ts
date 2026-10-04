@@ -1,0 +1,4 @@
+import { economyConfig } from "@/core/config"; import { calendarDaysBetween,dateKey } from "@/core/time"; import { AppState, WalletTransaction } from "./models";
+const id=()=>globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}`; export const balanceOf=(s:AppState)=>s.ledger.reduce((a,t)=>a+t.amount,0);
+export function creditDailyIncome(state:AppState,now:Date){const today=dateKey(now),days=calendarDaysBetween(state.lastIncomeDate,today);if(days<=0)return{state,credited:0,days:0};const amount=days*economyConfig.dailyIncome;const tx:WalletTransaction={id:id(),type:"DAILY_INCOME",amount,timestamp:now.toISOString(),description:days===1?"Daily income":`${days} daily deposits`};return{state:{...state,lastIncomeDate:today,ledger:[tx,...state.ledger]},credited:amount,days};}
+export const depositsNeeded=(price:number,balance:number)=>Math.max(0,Math.ceil((price-balance)/economyConfig.dailyIncome));
