@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "./engagement.css";
 import EngagementDock from "@/components/EngagementDock";
 
 export const metadata: Metadata={
