@@ -41,7 +41,7 @@ export async function loadCloudState():Promise<AppState>{
   await supabase.rpc("credit_daily_income");
 
   const [profileRes,ledgerRes,wishlistRes,cartRes,ordersRes,collectionRes]=await Promise.all([
-    supabase.from("profiles").select("display_name,last_income_date,dream_goal_product_id,public_slug,is_public").single(),
+    supabase.from("profiles").select("display_name,last_income_date,dream_goal_product_id,public_slug,is_public,is_admin").single(),
     supabase.from("wallet_transactions").select("id,type,amount,related_order_id,description,created_at").order("created_at",{ascending:false}),
     supabase.from("wishlist_items").select("product_id"),
     supabase.from("cart_items").select("product_id,quantity"),
@@ -100,7 +100,8 @@ export async function loadCloudState():Promise<AppState>{
     displayName:profileRes.data?.display_name??user.email?.split("@")[0]??"Shopper",
     dreamGoalProductId:profileRes.data?.dream_goal_product_id??undefined,
     publicSlug:profileRes.data?.public_slug??undefined,
-    isPublicProfile:profileRes.data?.is_public??false
+    isPublicProfile:profileRes.data?.is_public??false,
+    isAdmin:profileRes.data?.is_admin??false
   };
 }
 
