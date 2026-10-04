@@ -1,6 +1,6 @@
 export type TransactionType="INITIAL_BALANCE"|"DAILY_INCOME"|"PURCHASE"|"ACHIEVEMENT_REWARD"|"REFUND";
 export interface WalletTransaction { id:string; type:TransactionType; amount:number; timestamp:string; relatedOrderId?:string; description?:string }
-export type Category="Food"|"Electronics"|"Gaming"|"Fashion"|"Home"|"Vehicles"|"Luxury";
+export type Category="Food"|"Electronics"|"Gaming"|"Fashion"|"Home"|"Vehicles"|"Luxury"|"Fitness"|"Travel"|"Pets"|"Beauty"|"Office"|"Outdoors";
 export interface Product { id:string; name:string; description:string; category:Category; price:number; rating:number; reviewCount:number; isFeatured?:boolean; isPopular?:boolean; deliveryMinutes:number; collectionType:"collectible"|"consumable"; emoji:string; keywords:string[]; createdAt:string }
 export interface CartItem { productId:string; quantity:number }
 export interface OrderItem { productId:string; name:string; price:number; quantity:number; collectionType:Product["collectionType"]; emoji:string }
