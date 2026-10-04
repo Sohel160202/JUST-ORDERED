@@ -14,7 +14,7 @@ export default function ReferralLanding(){
    {preview===undefined?<><h1>Checking invite…</h1><p>One virtual shopping spree is loading.</p></>:preview===null?<><h1>This invite link is unavailable.</h1><p>The referral code may be invalid or referrals may be disabled.</p><a className="heroBtn linkButton" href="/">Open JUST ORDERED</a></>:<>
     <div className="referralGift">🎁</div>
     <h1>{preview.display_name} invited you.</h1>
-    <p>Join JUST ORDERED, build your imaginary lifestyle, and get a referral welcome bonus after you sign in.</p>
+    <p>Join JUST ORDERED, build your imaginary lifestyle, and get <b>+{formatMoney(Number(preview.invitee_reward??10000))}</b> virtual cash after you sign in.</p>
     <div className="referralPromise"><span>No real purchase.</span><span>No real delivery.</span><span>Only virtual money.</span></div>
     <button className="heroBtn" onClick={continueToShop}>Accept invite</button>
     <small>Referral rewards are credited once per new account. Self-referrals are blocked.</small>
