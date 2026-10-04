@@ -56,3 +56,29 @@
 /* Flagship product art */
 .productArt.flagship{isolation:isolate}.productArt.flagship .artStage{position:absolute;left:10%;right:10%;bottom:8%;height:18%;border-radius:50%;background:#0003;filter:blur(14px);transform:perspective(200px) rotateX(62deg)}.productArt.flagship .artObject{width:46%;border-radius:22%;transform:rotate(-7deg) translateY(-4px);box-shadow:0 28px 55px #0004,inset 0 1px #fff}.productArt.flagship .artEmoji{font-size:clamp(50px,6vw,90px)}.productArt.flagship .artLabel{font-weight:900}.art-e1{background:linear-gradient(145deg,#c9dbff,#6d83b3 48%,#1d2740)}.art-e1 .artObject{border-radius:24px;transform:rotate(-9deg)}.art-g2{background:linear-gradient(145deg,#ebe6ff,#7b68a7 55%,#292238)}.art-g2 .artObject{border-radius:34% 34% 24% 24%}.art-fa6{background:linear-gradient(145deg,#f4d8de,#a76879 56%,#54323e)}.art-fa6 .artObject{border-radius:34% 34% 18% 18%;transform:rotate(5deg)}.art-v8{background:linear-gradient(145deg,#dfe6e7,#717d80 45%,#262d2e)}.art-v8 .artObject{transform:rotate(-5deg) scaleX(1.12);border-radius:45% 45% 25% 25%}.art-l1{background:linear-gradient(145deg,#f1df9f,#9e823d 50%,#423414)}.art-l1 .artObject{border-radius:50%;transform:rotate(7deg)}.art-l3{background:linear-gradient(145deg,#cae8ef,#5e8995 52%,#1d424d)}.art-l3 .artObject{transform:rotate(-3deg) scaleX(1.18)}.art-l5{background:linear-gradient(145deg,#8ed3cc,#4e978d 50%,#1e5f58)}.art-l5 .artObject{border-radius:50%;transform:rotate(6deg)}.art-l10{background:linear-gradient(145deg,#ead7a1,#94763f 55%,#44351d)}.art-l10 .artObject{border-radius:12% 12% 28% 28%;transform:rotate(-2deg)}
 @media(max-width:800px){.levelBar{grid-template-columns:1fr}.goalHero{grid-template-columns:1fr}.goalVisual{min-height:190px}.dailyHead{align-items:flex-start;flex-direction:column}.dailyFeature{grid-template-columns:1fr}.dailyPicks{grid-template-columns:repeat(3,1fr)}.sceneShelf{grid-template-columns:repeat(2,1fr)}.profileCard{grid-template-columns:1fr}.profileStatGrid{grid-template-columns:1fr 1fr}.profileActions{flex-direction:row}.bottom{overflow-x:auto;justify-content:flex-start;gap:4px}.bottom button{min-width:62px;flex:1}}
+
+/* Premium share card export */
+.shareCardHost{position:fixed;left:-100000px;top:0;width:1200px;height:630px;pointer-events:none;z-index:-1}
+.shareCard{position:relative;width:1200px;height:630px;box-sizing:border-box;overflow:hidden;border-radius:42px;padding:52px 58px;background:linear-gradient(135deg,#0d0e0c 0%,#171914 50%,#10110f 100%);color:#fff;font-family:Arial,Helvetica,sans-serif;display:flex;flex-direction:column}
+.shareAura{position:absolute;border-radius:50%;filter:blur(10px);pointer-events:none}
+.shareAuraOne{width:420px;height:420px;right:-120px;top:-150px;background:radial-gradient(circle,#c8ff8330 0%,#c8ff8300 68%)}
+.shareAuraTwo{width:360px;height:360px;left:-150px;bottom:-180px;background:radial-gradient(circle,#ffffff12 0%,#ffffff00 70%)}
+.shareTop,.shareStats,.shareLower,.shareFooter,.shareDivider{position:relative;z-index:1}
+.shareTop{display:flex;align-items:flex-start;justify-content:space-between;gap:32px}
+.shareEyebrow{font-size:18px;line-height:1;font-weight:900;letter-spacing:.15em;color:#c8ff83;margin-bottom:13px}
+.shareTop h2{font-size:64px;line-height:.98;letter-spacing:-.045em;margin:0;font-weight:900;max-width:800px}
+.shareTop p{font-size:22px;color:#b8bab3;margin:13px 0 0;font-weight:500}
+.shareBadge{font-size:14px;font-weight:900;letter-spacing:.13em;border:1px solid #ffffff20;background:#ffffff08;border-radius:999px;padding:12px 16px;white-space:nowrap}
+.shareDivider{height:1px;background:linear-gradient(90deg,#ffffff20,#ffffff08 60%,transparent);margin:26px 0 20px}
+.shareStats{display:grid;grid-template-columns:1.65fr .72fr .72fr 1fr;gap:12px}
+.shareStat{min-height:92px;border:1px solid #ffffff12;background:linear-gradient(145deg,#ffffff0b,#ffffff04);border-radius:18px;padding:17px 19px;display:flex;flex-direction:column;justify-content:space-between}
+.shareStat span,.shareGoal span{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#8f928b;font-weight:800}
+.shareStat b{font-size:26px;letter-spacing:-.025em;line-height:1.05}
+.shareStat:first-child b{font-size:32px;color:#f7f8f4}
+.shareLower{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.shareGoal{border:1px solid #ffffff0f;background:#0b0c0a80;border-radius:18px;padding:15px 18px;display:flex;flex-direction:column;gap:7px;min-height:66px}
+.shareGoal b{font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.shareFooter{margin-top:auto;padding-top:18px;border-top:1px solid #ffffff12;display:flex;align-items:flex-end;justify-content:space-between}
+.shareFooter>div{display:flex;flex-direction:column;gap:4px}
+.shareFooter strong{font-size:22px;letter-spacing:.03em}
+.shareFooter span,.shareFooter small{font-size:13px;color:#8f928b}
