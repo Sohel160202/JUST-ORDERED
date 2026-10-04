@@ -2,7 +2,9 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./engagement.css";
 import "./season-rewards.css";
+import "./notifications.css";
 import EngagementDock from "@/components/EngagementDock";
+import NotificationBell from "@/components/NotificationBell";
 
 export const metadata: Metadata={
   title:"Just Ordered",
@@ -18,5 +20,5 @@ export const viewport: Viewport={
 };
 
 export default function RootLayout({children}:{children:React.ReactNode}){
-  return <html lang="en"><body>{children}<EngagementDock/></body></html>
+  return <html lang="en"><body>{children}<NotificationBell/><EngagementDock/></body></html>
 }
