@@ -41,7 +41,7 @@ export async function loadCloudState():Promise<AppState>{
   await supabase.rpc("credit_daily_income");
 
   const [profileRes,ledgerRes,wishlistRes,cartRes,ordersRes,collectionRes]=await Promise.all([
-    supabase.from("profiles").select("display_name,last_income_date").single(),
+    supabase.from("profiles").select("display_name,last_income_date,dream_goal_product_id").single(),
     supabase.from("wallet_transactions").select("id,type,amount,related_order_id,description,created_at").order("created_at",{ascending:false}),
     supabase.from("wishlist_items").select("product_id"),
     supabase.from("cart_items").select("product_id,quantity"),
@@ -97,7 +97,8 @@ export async function loadCloudState():Promise<AppState>{
     cart,
     orders,
     collection,
-    displayName:profileRes.data?.display_name??user.email?.split("@")[0]??"Shopper"
+    displayName:profileRes.data?.display_name??user.email?.split("@")[0]??"Shopper",
+    dreamGoalProductId:profileRes.data?.dream_goal_product_id??undefined
   };
 }
 
@@ -146,5 +147,11 @@ export async function placeCloudOrder(locationName="My Place"){
 export async function receiveCloudOrder(orderId:string){
   if(!supabase) throw new Error("Cloud sync is not configured.");
   const {error}=await supabase.rpc("receive_virtual_order",{p_order_id:orderId});
+  if(error) throw error;
+}
+
+export async function setCloudDreamGoal(productId:string|null){
+  if(!supabase) throw new Error("Cloud sync is not configured.");
+  const {error}=await supabase.rpc("set_dream_goal",{p_product_id:productId});
   if(error) throw error;
 }
