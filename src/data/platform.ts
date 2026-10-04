@@ -3,7 +3,7 @@ import { supabase } from "@/data/cloud";
 
 export type ShopCategory={name:Category;display_name:string;sort_order:number};
 export type ShopEvent={id:string;name:string;slug:string;headline:string;description:string;theme:string;featured_category?:Category|null;starts_at:string;ends_at:string;product_ids:string[];sponsor?:{name:string;website_url:string;label:string}|null};
-export type ShopConfig={categories:ShopCategory[];event:ShopEvent|null;daily_override:{temptation?:string|null;almost?:string|null;dream?:string|null;picks?:string[]}|null};
+export type ShopConfig={categories:ShopCategory[];category_sponsors:{category:Category;name:string;website_url:string;label:string}[];event:ShopEvent|null;daily_override:{temptation?:string|null;almost?:string|null;dream?:string|null;picks?:string[]}|null};
 
 const mapProduct=(x:any):Product=>({
  id:x.id,name:x.name,category:x.category as Category,price:Number(x.price),emoji:x.emoji,
@@ -46,9 +46,9 @@ export async function adminSetCategory(name:string,displayName:string,active:boo
  if(!supabase)throw new Error("Cloud sync is not configured.");
  const {error}=await supabase.rpc("admin_set_category",{p_name:name,p_display_name:displayName,p_active:active,p_sort:sort});if(error)throw error;
 }
-export async function adminUpsertSponsor(input:{id?:string|null;name:string;url:string;label:string;active:boolean}){
+export async function adminUpsertSponsor(input:{id?:string|null;name:string;url:string;label:string;active:boolean;category?:string}){
  if(!supabase)throw new Error("Cloud sync is not configured.");
- const {data,error}=await supabase.rpc("admin_upsert_sponsor",{p_id:input.id??null,p_name:input.name,p_url:input.url,p_label:input.label,p_active:input.active});if(error)throw error;return data as string;
+ const {data,error}=await supabase.rpc("admin_upsert_sponsor",{p_id:input.id??null,p_name:input.name,p_url:input.url,p_label:input.label,p_active:input.active,p_category:input.category??""});if(error)throw error;return data as string;
 }
 export async function adminUpsertEvent(p:any){
  if(!supabase)throw new Error("Cloud sync is not configured.");
