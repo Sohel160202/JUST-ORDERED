@@ -36,7 +36,13 @@ const funnyReviews:Record<Category,string[]>={
  Fashion:["Fit goes unbelievably hard for something I cannot physically wear.","My imaginary paparazzi have become unbearable.","The confidence boost was real. The jacket was not."],
  Home:["Completely transformed the apartment I also do not own.","Assembly took zero hours. Swedish furniture could never.","My imaginary guests keep asking where I bought it."],
  Vehicles:["0–100 instantly because physics is optional here.","My virtual neighbors have already filed three complaints.","Insurance quote came back at exactly ৳0. Beautiful."],
- Luxury:["Worth every imaginary taka.","My accountant fainted until I reminded him none of this is real.","Subtle enough for a billionaire with absolutely no subtlety."]
+ Luxury:["Worth every imaginary taka.","My accountant fainted until I reminded him none of this is real.","Subtle enough for a billionaire with absolutely no subtlety."],
+ Fitness:["My virtual muscles are already filing progress photos.","Sweated exactly zero drops. Elite efficiency.","The motivation lasted longer than the imaginary workout."],
+ Travel:["The itinerary was flawless and my passport never left the drawer.","Five stars for views I experienced entirely in my head.","Jet lag was wonderfully fictional."],
+ Pets:["Best imaginary roommate I have ever had.","Zero shedding. Zero vet bills. Infinite emotional support.","My furniture remains completely safe. Miracles happen."],
+ Beauty:["The glow-up was immediate, according to the mirror in my imagination.","Luxury results with absolutely no bathroom counter clutter.","Confidence increased. Product ownership remained fictional."],
+ Office:["Productivity rose 400% until I opened another tab.","Looks extremely executive from my imaginary corner office.","Finally, workplace luxury with zero actual meetings."],
+ Outdoors:["Fresh air not included, but the adventure energy is strong.","Survived the entire expedition without leaving my chair.","My imaginary campsite has better amenities than my home."]
 };
 export function reviewsFor(product:Product){const pool=funnyReviews[product.category];return pool.map((text,i)=>({name:["DefinitelyRealBuyer","ImpulseBuyer99","WalletOnVacation"][i],rating:i===1?4:5,text}));}
 
