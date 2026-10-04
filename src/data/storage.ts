@@ -1,5 +1,5 @@
 import { AppState, WalletTransaction } from "@/domain/models"; import { economyConfig } from "@/core/config"; import { dateKey } from "@/core/time";
-const KEY="just-ordered:v1"; const id=()=>globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}`;
+const KEY="just-ordered:v2"; const id=()=>globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}`;
 export interface StateRepository { load():AppState; save(state:AppState):void; clear():void }
 export class BrowserStateRepository implements StateRepository {
  load():AppState { if(typeof window==="undefined") return freshState(new Date()); const raw=localStorage.getItem(KEY); if(!raw){const s=freshState(new Date());this.save(s);return s} try{return JSON.parse(raw)}catch{const s=freshState(new Date());this.save(s);return s} }
