@@ -62,3 +62,28 @@ export async function adminReviewSubmission(id:string,status:string,notes:string
  if(!supabase)throw new Error("Cloud sync is not configured.");
  const {data,error}=await supabase.rpc("admin_review_submission",{p_submission_id:id,p_status:status,p_notes:notes,p_product:product});if(error)throw error;return data as string|null;
 }
+
+
+export async function getReferralPreview(code:string){
+ if(!supabase)return null;
+ const {data,error}=await supabase.rpc("referral_preview",{p_code:code});
+ if(error)throw error;
+ return (data??[])[0]??null;
+}
+export async function claimReferral(code:string){
+ if(!supabase)throw new Error("Cloud sync is not configured.");
+ const {data,error}=await supabase.rpc("claim_referral",{p_code:code});
+ if(error)throw error;
+ return data as {status:string;inviter_reward?:number;invitee_reward?:number};
+}
+export async function getReferralDashboard(){
+ if(!supabase)throw new Error("Cloud sync is not configured.");
+ const {data,error}=await supabase.rpc("referral_dashboard");
+ if(error)throw error;
+ return data as {enabled:boolean;referral_code:string;inviter_reward:number;invitee_reward:number;milestone_3_reward:number;successful_referrals:number;total_earned:number;recent:{display_name:string;created_at:string}[]};
+}
+export async function adminSetReferralSettings(input:{enabled:boolean;inviterReward:number;inviteeReward:number;milestone3Reward:number}){
+ if(!supabase)throw new Error("Cloud sync is not configured.");
+ const {error}=await supabase.rpc("admin_set_referral_settings",{p_enabled:input.enabled,p_inviter_reward:input.inviterReward,p_invitee_reward:input.inviteeReward,p_milestone_3_reward:input.milestone3Reward});
+ if(error)throw error;
+}
