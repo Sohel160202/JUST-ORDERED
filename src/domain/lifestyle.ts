@@ -15,17 +15,27 @@ export interface Achievement { id:string; title:string; description:string; emoj
 export function achievements(state:AppState, products:Product[], totalSpent:number):Achievement[]{
  const owned=state.collection.length;
  const categoriesOwned=new Set(state.collection.map(i=>products.find(p=>p.id===i.productId)?.category).filter(Boolean));
- const luxuryOwned=state.collection.some(i=>products.find(p=>p.id===i.productId)?.category==="Luxury");
- const vehicleOwned=state.collection.some(i=>products.find(p=>p.id===i.productId)?.category==="Vehicles");
+ const categoryCount=(category:Category)=>state.collection.filter(i=>products.find(p=>p.id===i.productId)?.category===category).length;
+ const luxuryOwned=categoryCount("Luxury")>0,vehicleCount=categoryCount("Vehicles"),gamingCount=categoryCount("Gaming"),travelOrders=state.orders.flatMap(o=>o.items).filter(i=>products.find(p=>p.id===i.productId)?.category==="Travel").length;
  const orders=state.orders.length;
+ const wishlistValue=state.wishlist.reduce((sum,id)=>sum+(products.find(p=>p.id===id)?.price??0),0);
+ const millionItem=state.collection.some(i=>i.purchasePrice>=1000000);
  return [
   {id:"first-order",title:"Just Ordered!",description:"Place your first virtual order.",emoji:"📦",unlocked:orders>=1,progress:orders>=1?"Unlocked":`${orders}/1 order`},
+  {id:"five-orders",title:"Repeat Offender",description:"Place 5 virtual orders.",emoji:"🛍️",unlocked:orders>=5,progress:`${Math.min(orders,5)}/5 orders`},
   {id:"collector",title:"Shelf Starter",description:"Own 5 collectible items.",emoji:"🗄️",unlocked:owned>=5,progress:`${Math.min(owned,5)}/5 items`},
+  {id:"collector-25",title:"Collection Problem",description:"Own 25 collectible items.",emoji:"🏛️",unlocked:owned>=25,progress:`${Math.min(owned,25)}/25 items`},
   {id:"big-spender",title:"Imaginary Big Spender",description:"Spend ৳100,000 virtually.",emoji:"💸",unlocked:totalSpent>=100000,progress:`৳${Math.min(totalSpent,100000).toLocaleString()}/৳100,000`},
   {id:"million",title:"Million Taka Mood",description:"Spend ৳1,000,000 virtually.",emoji:"🤑",unlocked:totalSpent>=1000000,progress:`৳${Math.min(totalSpent,1000000).toLocaleString()}/৳1,000,000`},
-  {id:"garage",title:"Keys, Please",description:"Own your first vehicle.",emoji:"🔑",unlocked:vehicleOwned,progress:vehicleOwned?"Unlocked":"0/1 vehicle"},
+  {id:"ten-million",title:"Financially Fictional",description:"Spend ৳10,000,000 virtually.",emoji:"🏦",unlocked:totalSpent>=10000000,progress:`৳${Math.min(totalSpent,10000000).toLocaleString()}/৳10M`},
+  {id:"garage",title:"Keys, Please",description:"Own your first vehicle.",emoji:"🔑",unlocked:vehicleCount>=1,progress:vehicleCount>=1?"Unlocked":"0/1 vehicle"},
+  {id:"fleet",title:"Parking Problem",description:"Own 5 vehicles.",emoji:"🏎️",unlocked:vehicleCount>=5,progress:`${Math.min(vehicleCount,5)}/5 vehicles`},
+  {id:"gaming",title:"Respawn Required",description:"Own 10 Gaming items.",emoji:"🎮",unlocked:gamingCount>=10,progress:`${Math.min(gamingCount,10)}/10 gaming items`},
   {id:"luxury",title:"Absolutely Necessary",description:"Own a Luxury item.",emoji:"💎",unlocked:luxuryOwned,progress:luxuryOwned?"Unlocked":"0/1 luxury item"},
-  {id:"lifestyle",title:"Lifestyle Architect",description:"Own items from 4 different categories.",emoji:"🏆",unlocked:categoriesOwned.size>=4,progress:`${Math.min(categoriesOwned.size,4)}/4 categories`}
+  {id:"million-item",title:"Seven-Figure Taste",description:"Own one item worth at least ৳1,000,000.",emoji:"👑",unlocked:millionItem,progress:millionItem?"Unlocked":"No ৳1M item yet"},
+  {id:"traveler",title:"Passport Optional",description:"Order 3 Travel Plans.",emoji:"✈️",unlocked:travelOrders>=3,progress:`${Math.min(travelOrders,3)}/3 travel plans`},
+  {id:"lifestyle",title:"Lifestyle Architect",description:"Own items from 6 different categories.",emoji:"🏆",unlocked:categoriesOwned.size>=6,progress:`${Math.min(categoriesOwned.size,6)}/6 categories`},
+  {id:"wishlist",title:"Dream Bigger",description:"Build a wishlist worth ৳1,000,000.",emoji:"💭",unlocked:wishlistValue>=1000000,progress:`৳${Math.min(wishlistValue,1000000).toLocaleString()}/৳1M`}
  ];
 }
 
