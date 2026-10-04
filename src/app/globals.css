@@ -6,3 +6,19 @@
 
 .achievementStrip{margin:38px 0;padding:26px;border-radius:26px;background:#171714;color:#fff;display:grid;grid-template-columns:1.2fr 1.5fr auto;gap:24px;align-items:center}.achievementStrip h2{margin:5px 0;font-size:28px}.achievementStrip p{margin:0;color:#aaa}.achievementMini{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.achievementMini span{background:#272722;border:1px solid #ffffff12;border-radius:16px;padding:12px;text-align:center;filter:grayscale(1);opacity:.45;display:flex;flex-direction:column;gap:5px;font-size:25px}.achievementMini span.unlocked{filter:none;opacity:1}.achievementMini small{font-size:10px;color:#ccc}.roomGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0 26px}.roomCard{border:1px solid #e6e5df;background:#fff;border-radius:20px;padding:18px;text-align:left;display:flex;flex-direction:column;gap:5px;min-height:145px}.roomCard:hover,.roomCard.selected{border-color:#171714;box-shadow:0 8px 24px #0000000d}.roomCard>span{font-size:30px}.roomCard b{font-size:17px}.roomCard small{color:#777}.roomCard em{font-style:normal;color:#999;font-size:11px;line-height:1.4;margin-top:auto}.achievementPanel{margin-bottom:20px}.achievementGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.achievementCard{border:1px solid #e9e8e3;border-radius:16px;padding:15px;display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;opacity:.45;filter:grayscale(1)}.achievementCard.unlocked{opacity:1;filter:none;background:#f8fbf4}.achievementCard>span{font-size:28px}.achievementCard p{margin:4px 0;color:#777;font-size:12px}.achievementCard small{font-size:11px;font-weight:700}.reviewSection{margin-top:22px;border-top:1px solid #eee;padding-top:18px}.reviewSection h3{margin:0}.reviewCard{background:#f7f7f4;border-radius:14px;padding:13px;margin-top:9px}.reviewCard p{margin:6px 0 0;color:#666;font-size:13px;line-height:1.45}
 @media(max-width:800px){.achievementStrip{grid-template-columns:1fr}.achievementMini{grid-template-columns:repeat(2,1fr)}.roomGrid{grid-template-columns:repeat(2,1fr)}.achievementGrid{grid-template-columns:1fr}}
+
+/* Viewport-safe dialogs */
+.modalback{overflow:auto;overscroll-behavior:contain;align-items:start;padding-top:max(20px,4vh);padding-bottom:max(20px,4vh)}
+.modal{max-height:calc(100dvh - 40px);overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable}
+.productmodal{max-height:min(860px,calc(100dvh - 40px));overflow:auto;padding-top:24px;padding-bottom:28px}
+.productmodal .close{position:sticky;top:0;float:right;z-index:5;background:#fff;border:1px solid #e8e7e1;width:36px;height:36px;border-radius:999px;display:grid;place-items:center;line-height:1;margin:-10px -10px 0 0}
+.productmodal .productpic{margin-top:6px}
+.productmodal::-webkit-scrollbar,.modal::-webkit-scrollbar{width:10px}
+.productmodal::-webkit-scrollbar-thumb,.modal::-webkit-scrollbar-thumb{background:#d7d5cf;border-radius:999px;border:2px solid #fff}
+.productmodal::-webkit-scrollbar-track,.modal::-webkit-scrollbar-track{background:transparent}
+@media(max-width:800px){
+ .modalback{padding:10px;align-items:end}
+ .modal{max-height:94dvh;border-radius:24px 24px 0 0}
+ .productmodal{max-height:94dvh;padding:20px 18px 26px}
+ .productmodal .productpic{height:180px}
+}
