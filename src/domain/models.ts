@@ -7,4 +7,4 @@ export interface OrderItem { productId:string; name:string; price:number; quanti
 export type OrderStatus="ORDER_PLACED"|"PROCESSING"|"PACKED"|"SHIPPED"|"OUT_FOR_DELIVERY"|"DELIVERED"|"RECEIVED";
 export interface Order { id:string; number:string; items:OrderItem[]; total:number; orderedAt:string; expectedDeliveryAt:string; status:OrderStatus; locationName:string }
 export interface CollectionItem { id:string; productId:string; name:string; emoji:string; acquiredAt:string; purchasePrice:number }
-export interface AppState { version:1; onboardingCompleted:boolean; lastIncomeDate:string; ledger:WalletTransaction[]; wishlist:string[]; cart:CartItem[]; orders:Order[]; collection:CollectionItem[]; displayName:string; debugTimeOffsetMinutes?:number }
+export interface AppState { version:1; onboardingCompleted:boolean; lastIncomeDate:string; ledger:WalletTransaction[]; wishlist:string[]; cart:CartItem[]; orders:Order[]; collection:CollectionItem[]; displayName:string; dreamGoalProductId?:string; debugTimeOffsetMinutes?:number }
