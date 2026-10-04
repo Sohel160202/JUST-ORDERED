@@ -41,7 +41,7 @@ export async function loadCloudState():Promise<AppState>{
   await supabase.rpc("credit_daily_income");
 
   const [profileRes,ledgerRes,wishlistRes,cartRes,ordersRes,collectionRes]=await Promise.all([
-    supabase.from("profiles").select("display_name,last_income_date,dream_goal_product_id").single(),
+    supabase.from("profiles").select("display_name,last_income_date,dream_goal_product_id,public_slug,is_public").single(),
     supabase.from("wallet_transactions").select("id,type,amount,related_order_id,description,created_at").order("created_at",{ascending:false}),
     supabase.from("wishlist_items").select("product_id"),
     supabase.from("cart_items").select("product_id,quantity"),
@@ -98,7 +98,9 @@ export async function loadCloudState():Promise<AppState>{
     orders,
     collection,
     displayName:profileRes.data?.display_name??user.email?.split("@")[0]??"Shopper",
-    dreamGoalProductId:profileRes.data?.dream_goal_product_id??undefined
+    dreamGoalProductId:profileRes.data?.dream_goal_product_id??undefined,
+    publicSlug:profileRes.data?.public_slug??undefined,
+    isPublicProfile:profileRes.data?.is_public??false
   };
 }
 
@@ -154,4 +156,28 @@ export async function setCloudDreamGoal(productId:string|null){
   if(!supabase) throw new Error("Cloud sync is not configured.");
   const {error}=await supabase.rpc("set_dream_goal",{p_product_id:productId});
   if(error) throw error;
+}
+
+export type PublicLeaderboardRow={rank:number;public_slug:string;display_name:string;collection_value:number;item_count:number;order_count:number;favorite_category:string;lifestyle_score:number;level:number};
+
+export async function setCloudPublicProfile(displayName:string,slug:string,isPublic:boolean){
+  if(!supabase) throw new Error("Cloud sync is not configured.");
+  const {error}=await supabase.rpc("set_public_profile",{p_display_name:displayName,p_public_slug:slug,p_is_public:isPublic});
+  if(error) throw error;
+}
+
+export async function getPublicLeaderboard(limit=25):Promise<PublicLeaderboardRow[]>{
+  if(!supabase) return [];
+  const {data,error}=await supabase.rpc("public_leaderboard",{p_limit:limit});
+  if(error) throw error;
+  return (data??[]).map((x:any)=>({...x,rank:Number(x.rank),collection_value:Number(x.collection_value),item_count:Number(x.item_count),order_count:Number(x.order_count),lifestyle_score:Number(x.lifestyle_score),level:Number(x.level)}));
+}
+
+export async function getPublicProfile(slug:string){
+  if(!supabase) return null;
+  const {data,error}=await supabase.rpc("public_profile_by_slug",{p_slug:slug});
+  if(error) throw error;
+  const x=(data??[])[0];
+  if(!x)return null;
+  return {...x,collection_value:Number(x.collection_value),item_count:Number(x.item_count),order_count:Number(x.order_count),total_spent:Number(x.total_spent),category_count:Number(x.category_count),lifestyle_score:Number(x.lifestyle_score),level:Number(x.level)};
 }
