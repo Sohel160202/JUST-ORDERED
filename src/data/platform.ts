@@ -8,6 +8,8 @@ export type Mission={code:string;title:string;description:string;target:number;c
 export type EngagementDashboard={streak:number;longest_streak:number;daily:Mission[];weekly:Mission[];season:null|{name:string;slug:string;subtitle:string;starts_at:string;ends_at:string;xp:number;level:number;level_progress:number}};
 export type SeasonReward={id:string;level_required:number;reward_type:"CASH"|"BADGE"|"PROFILE_FRAME"|"COLLECTIBLE";title:string;description:string;emoji:string;cash_amount:number;cosmetic_key?:string|null;eligible:boolean;claimed:boolean};
 export type SeasonRewardsDashboard={level:number;xp:number;active_badge?:string|null;active_profile_frame?:string|null;rewards:SeasonReward[];cosmetics:{cosmetic_key:string;cosmetic_type:string;title:string;emoji:string}[]};
+export type NotificationItem={id:string;type:string;title:string;body:string;icon:string;action_url?:string|null;metadata?:Record<string,unknown>;read_at?:string|null;created_at:string};
+export type NotificationCenter={unread_count:number;items:NotificationItem[]};
 
 const mapProduct=(x:any):Product=>({
  id:x.id,name:x.name,category:x.category as Category,price:Number(x.price),emoji:x.emoji,
@@ -39,3 +41,7 @@ export async function adminSetSeason(input:{name:string;slug:string;subtitle:str
 export async function getSeasonRewards():Promise<SeasonRewardsDashboard>{if(!supabase)throw new Error("Cloud sync is not configured.");const{data,error}=await supabase.rpc("season_rewards_dashboard");if(error)throw error;return data as SeasonRewardsDashboard}
 export async function claimSeasonReward(rewardId:string){if(!supabase)throw new Error("Cloud sync is not configured.");const{data,error}=await supabase.rpc("claim_season_reward",{p_reward_id:rewardId});if(error)throw error;return data as {status:string;reward_type?:string;title?:string;cash_amount?:number;cosmetic_key?:string}}
 export async function equipSeasonCosmetic(cosmeticKey:string){if(!supabase)throw new Error("Cloud sync is not configured.");const{error}=await supabase.rpc("equip_season_cosmetic",{p_cosmetic_key:cosmeticKey});if(error)throw error}
+
+export async function getNotificationCenter(limit=30):Promise<NotificationCenter>{if(!supabase)throw new Error("Cloud sync is not configured.");const{data,error}=await supabase.rpc("notification_center",{p_limit:limit});if(error)throw error;return data as NotificationCenter}
+export async function markNotificationRead(id:string){if(!supabase)return;const{error}=await supabase.rpc("mark_notification_read",{p_id:id});if(error)throw error}
+export async function markAllNotificationsRead(){if(!supabase)return;const{error}=await supabase.rpc("mark_all_notifications_read");if(error)throw error}
