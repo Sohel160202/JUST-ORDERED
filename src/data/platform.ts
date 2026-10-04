@@ -4,6 +4,8 @@ import { supabase } from "@/data/cloud";
 export type ShopCategory={name:Category;display_name:string;sort_order:number};
 export type ShopEvent={id:string;name:string;slug:string;headline:string;description:string;theme:string;featured_category?:Category|null;starts_at:string;ends_at:string;product_ids:string[];sponsor?:{name:string;website_url:string;label:string}|null};
 export type ShopConfig={categories:ShopCategory[];category_sponsors:{category:Category;name:string;website_url:string;label:string}[];event:ShopEvent|null;daily_override:{temptation?:string|null;almost?:string|null;dream?:string|null;picks?:string[]}|null};
+export type Mission={code:string;title:string;description:string;target:number;cash:number;xp:number;progress:number;completed:boolean};
+export type EngagementDashboard={streak:number;longest_streak:number;daily:Mission[];weekly:Mission[];season:null|{name:string;slug:string;subtitle:string;starts_at:string;ends_at:string;xp:number;level:number;level_progress:number}};
 
 const mapProduct=(x:any):Product=>({
  id:x.id,name:x.name,category:x.category as Category,price:Number(x.price),emoji:x.emoji,
@@ -63,7 +65,6 @@ export async function adminReviewSubmission(id:string,status:string,notes:string
  const {data,error}=await supabase.rpc("admin_review_submission",{p_submission_id:id,p_status:status,p_notes:notes,p_product:product});if(error)throw error;return data as string|null;
 }
 
-
 export async function getReferralPreview(code:string){
  if(!supabase)return null;
  const {data,error}=await supabase.rpc("referral_preview",{p_code:code});
@@ -86,4 +87,22 @@ export async function adminSetReferralSettings(input:{enabled:boolean;inviterRew
  if(!supabase)throw new Error("Cloud sync is not configured.");
  const {error}=await supabase.rpc("admin_set_referral_settings",{p_enabled:input.enabled,p_inviter_reward:input.inviterReward,p_invitee_reward:input.inviteeReward,p_milestone_3_reward:input.milestone3Reward});
  if(error)throw error;
+}
+
+export async function getEngagementDashboard():Promise<EngagementDashboard>{
+ if(!supabase)throw new Error("Cloud sync is not configured.");
+ const {data,error}=await supabase.rpc("engagement_dashboard");
+ if(error)throw error;
+ return data as EngagementDashboard;
+}
+export async function recordShopActivity(productId:string,category:Category){
+ if(!supabase)return;
+ const {error}=await supabase.rpc("record_shop_activity",{p_product_id:productId,p_category:category});
+ if(error)throw error;
+}
+export async function adminSetSeason(input:{name:string;slug:string;subtitle:string;startsAt:string;endsAt:string;active:boolean}){
+ if(!supabase)throw new Error("Cloud sync is not configured.");
+ const {data,error}=await supabase.rpc("admin_set_season",{p_name:input.name,p_slug:input.slug,p_subtitle:input.subtitle,p_starts_at:input.startsAt,p_ends_at:input.endsAt,p_active:input.active});
+ if(error)throw error;
+ return data as string;
 }
