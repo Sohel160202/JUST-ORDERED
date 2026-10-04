@@ -17,7 +17,7 @@
 .productmodal::-webkit-scrollbar-thumb,.modal::-webkit-scrollbar-thumb{background:#d7d5cf;border-radius:999px;border:2px solid #fff}
 .productmodal::-webkit-scrollbar-track,.modal::-webkit-scrollbar-track{background:transparent}
 @media(max-width:800px){
- .modalback{padding:10px;align-items:end}
+ .modalback{padding:10px;align-items:flex-end}
  .modal{max-height:94dvh;border-radius:24px 24px 0 0}
  .productmodal{max-height:94dvh;padding:20px 18px 26px}
  .productmodal .productpic{height:180px}
